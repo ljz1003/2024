@@ -2,7 +2,7 @@ package com.sample.demo;
 
 import java.util.Scanner;
 
-public class StringWorkder {
+public class StringWorker {
 
     /*
     For a given string that only contains alphabet characters a-z,
