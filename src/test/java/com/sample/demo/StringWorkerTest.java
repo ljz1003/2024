@@ -24,7 +24,7 @@ public class StringWorkerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExeception2 () {
-        stringWorkder.replaceConsecutiveString("add233@dddd");
+        stringWorkder.replaceConsecutiveString("adddddd$");
     }
 
     //replace case test
@@ -40,7 +40,7 @@ public class StringWorkerTest {
     //replace from rear
     @Test
     public void replaceeShouldSuccess1 () {
-        String src = "caabbccddd";
+        String src = "caabbccddd"; // caabbccc -> caabbb -> caaa -> c
         String dest = stringWorkder.replaceConsecutiveString(src);
         Assert.assertEquals("c", dest);
     }
@@ -48,7 +48,7 @@ public class StringWorkerTest {
     ////replace from head
     @Test
     public void replaceShouldSuccess2 () {
-        String src = "cccbbdddf";
+        String src = "cccbbdddf"; //bbbdddf ->adddf->acf
         String dest = stringWorkder.replaceConsecutiveString(src);
         Assert.assertEquals("acf", dest);
     }
@@ -57,35 +57,35 @@ public class StringWorkerTest {
     //replace from middle
     @Test
     public void replaceShouldSuccess3 () {
-        //aeddabcdd
-        String src = "cccbbeddabcdeeedd";
+        String src = "cccbbeddabcdeeedd"; //bbbeddabcdeeedd ->  aeddabcdeeedd -> aeddabcdddd -> aeddabcc
         String dest = stringWorkder.replaceConsecutiveString(src);
         Assert.assertEquals("aeddabcc", dest);
     }
 
     @Test
     public void replaceShouldSuccess4() {
+        //abcccbad -> abbbad ->aaad -> d
         Assert.assertEquals("d", stringWorkder.replaceConsecutiveString("abcccbad"));
     }
 
     //remove case test
     @Test
     public void removeShouldSuccess () {
-        String src = "aabbccdd";
+        String src = "aabbccdd"; //aabbccdd
         String dest = stringWorkder.removeConsecutiveString3(src);
         Assert.assertEquals(src, dest);
     }
 
     @Test
     public void removeShouldSuccess1 () {
-        String src = "caabbccddd";
+        String src = "caabbccddd"; //caabbcc
         String dest = stringWorkder.removeConsecutiveString3(src);
         Assert.assertEquals("caabbcc", dest);
     }
 
     @Test
     public void removeShouldSuccess2 () {
-        String src = "cccbbdddf";
+        String src = "cccbbdddf"; //cccbbdddf -> bbdddf -> bbf
         String dest = stringWorkder.removeConsecutiveString3(src);
         Assert.assertEquals("bbf", dest);
     }
@@ -93,15 +93,21 @@ public class StringWorkerTest {
 
     @Test
     public void removeShouldSuccess3 () {
-        //aeddabcdd
-        String src = "cccbbeddabcdeeedd";
+        String src = "cccbbeddabcdeeedd"; // cccbbeddabcdeeedd -> bbeddabcdeeedd -> bbeddabcddd -> bbeddabc
         String dest = stringWorkder.removeConsecutiveString3(src);
         Assert.assertEquals("bbeddabc", dest);
     }
 
     @Test
     public void removeShouldSuccess4 () {
+        //aabcccbbad -> aabbbad -> aaad -> d
         String dest = stringWorkder.removeConsecutiveString3("aabcccbbad");
         Assert.assertEquals("d", dest);
+    }
+
+    @Test
+    public void removeShouldSuccess5 () {
+        String dest = stringWorkder.removeConsecutiveString3("abcdd");
+        Assert.assertEquals("abcdd", dest);
     }
 }
