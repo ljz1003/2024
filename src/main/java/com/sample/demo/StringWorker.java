@@ -41,7 +41,7 @@ public class StringWorker {
 
         int i = 0;
         while (i < srcStr.length()) {
-
+            //ensure every character is alphabetic
             if(!Character.isAlphabetic(srcStr.codePointAt(i))) {
                 throw new IllegalArgumentException("source string must an alphabetic string.");
 
@@ -51,6 +51,8 @@ public class StringWorker {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append(srcStr.charAt(i));
                 while (endIndex < srcStr.length()) {
+                    //only the char code value is equal, we think that the character is the same character,
+                    //for instance 'A' == 'A' only and 'A' !='a'
                     if (srcStr.charAt(i) != srcStr.charAt(endIndex)) {
                         break;
                     }
@@ -61,7 +63,9 @@ public class StringWorker {
 
                 String subStr = stringBuilder.toString();
                 if (subStr.length() >= 3) {
+                    //print with remove format or replace format
                     srcStr = printer.doPrint(srcStr, subStr);
+                    //backward the index so that we can start it over again.
                     i = backwardIndex(srcStr, i);
                 } else {
                     i = endIndex;
