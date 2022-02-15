@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public class StringWorkerTest {
 
+    //private instance
     private StringWorkder stringWorkder = new StringWorkder();
 
 

@@ -94,9 +94,9 @@ public class StringWorkder {
         return src;
     }
 
-    public static void main(String[] args) {
-        System.out.println("Input (Press enter to continue):");
-        Scanner scanner = new Scanner(System.in);
-        String src = scanner.next();
-    }
+//    public static void main(String[] args) {
+//        System.out.println("Input (Press enter to continue):");
+//        Scanner scanner = new Scanner(System.in);
+//        String src = scanner.next();
+//    }
 }
