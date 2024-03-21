@@ -8,106 +8,106 @@ import static org.junit.Assert.assertTrue;
 public class StringWorkerTest {
 
     //private instance
-    private StringWorker stringWorkder = new StringWorker();
+    private StringWorker stringWorkder = StringWorker.getInstance();
 
 
     //Exception case test
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExeception () {
-        stringWorkder.replaceConsecutiveString("  ");
+    @Test(expected = IllegalFormatStringException.class)
+    public void shouldThrowExeception () throws IllegalFormatStringException {
+        stringWorkder.replace("  ");
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExeception1 () {
-        stringWorkder.replaceConsecutiveString(null);
+    @Test(expected = IllegalFormatStringException.class)
+    public void shouldThrowExeception1 () throws IllegalFormatStringException {
+        stringWorkder.replace(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExeception2 () {
-        stringWorkder.replaceConsecutiveString("adddddd$");
+    @Test(expected = IllegalFormatStringException.class)
+    public void shouldThrowExeception2 () throws IllegalFormatStringException {
+        stringWorkder.remove("adddddd$");
     }
 
     //replace case test
 
     //nothing to be replaced
     @Test
-    public void replaceShouldSuccess () {
+    public void replaceShouldSuccess () throws IllegalFormatStringException {
         String src = "aabbccdd";
-        String dest = stringWorkder.replaceConsecutiveString(src);
+        String dest = stringWorkder.replace(src);
         Assert.assertEquals(src, dest);
     }
 
     //replace from rear
     @Test
-    public void replaceeShouldSuccess1 () {
+    public void replaceeShouldSuccess1 () throws IllegalFormatStringException {
         String src = "caabbccddd"; // caabbccc -> caabbb -> caaa -> c
-        String dest = stringWorkder.replaceConsecutiveString(src);
+        String dest = stringWorkder.replace(src);
         Assert.assertEquals("c", dest);
     }
 
     ////replace from head
     @Test
-    public void replaceShouldSuccess2 () {
+    public void replaceShouldSuccess2 () throws IllegalFormatStringException {
         String src = "cccbbdddf"; //bbbdddf ->adddf->acf
-        String dest = stringWorkder.replaceConsecutiveString(src);
+        String dest = stringWorkder.replace(src);
         Assert.assertEquals("acf", dest);
     }
 
 
     //replace from middle
     @Test
-    public void replaceShouldSuccess3 () {
+    public void replaceShouldSuccess3 () throws IllegalFormatStringException {
         String src = "cccbbeddabcdeeedd"; //bbbeddabcdeeedd ->  aeddabcdeeedd -> aeddabcdddd -> aeddabcc
-        String dest = stringWorkder.replaceConsecutiveString(src);
+        String dest = stringWorkder.replace(src);
         Assert.assertEquals("aeddabcc", dest);
     }
 
     @Test
-    public void replaceShouldSuccess4() {
+    public void replaceShouldSuccess4() throws IllegalFormatStringException {
         //abcccbad -> abbbad ->aaad -> d
-        Assert.assertEquals("d", stringWorkder.replaceConsecutiveString("abcccbad"));
+        Assert.assertEquals("d", stringWorkder.replace("abcccbad"));
     }
 
     //remove case test
     @Test
-    public void removeShouldSuccess () {
+    public void removeShouldSuccess () throws IllegalFormatStringException {
         String src = "aabbccdd"; //aabbccdd
-        String dest = stringWorkder.removeConsecutiveString3(src);
+        String dest = stringWorkder.remove(src);
         Assert.assertEquals(src, dest);
     }
 
     @Test
-    public void removeShouldSuccess1 () {
+    public void removeShouldSuccess1 () throws IllegalFormatStringException {
         String src = "caabbccddd"; //caabbcc
-        String dest = stringWorkder.removeConsecutiveString3(src);
+        String dest = stringWorkder.remove(src);
         Assert.assertEquals("caabbcc", dest);
     }
 
     @Test
-    public void removeShouldSuccess2 () {
+    public void removeShouldSuccess2 () throws IllegalFormatStringException {
         String src = "cccbbdddf"; //cccbbdddf -> bbdddf -> bbf
-        String dest = stringWorkder.removeConsecutiveString3(src);
+        String dest = stringWorkder.remove(src);
         Assert.assertEquals("bbf", dest);
     }
 
 
     @Test
-    public void removeShouldSuccess3 () {
+    public void removeShouldSuccess3 () throws IllegalFormatStringException {
         String src = "cccbbeddabcdeeedd"; // cccbbeddabcdeeedd -> bbeddabcdeeedd -> bbeddabcddd -> bbeddabc
-        String dest = stringWorkder.removeConsecutiveString3(src);
+        String dest = stringWorkder.remove(src);
         Assert.assertEquals("bbeddabc", dest);
     }
 
     @Test
-    public void removeShouldSuccess4 () {
+    public void removeShouldSuccess4 () throws IllegalFormatStringException {
         //aabcccbbad -> aabbbad -> aaad -> d
-        String dest = stringWorkder.removeConsecutiveString3("aabcccbbad");
+        String dest = stringWorkder.remove("aabcccbbad");
         Assert.assertEquals("d", dest);
     }
 
     @Test
-    public void removeShouldSuccess5 () {
-        String dest = stringWorkder.removeConsecutiveString3("abcdd");
+    public void removeShouldSuccess5 () throws IllegalFormatStringException {
+        String dest = stringWorkder.remove("abcdd");
         Assert.assertEquals("abcdd", dest);
     }
 }

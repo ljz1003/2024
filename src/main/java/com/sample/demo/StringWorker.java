@@ -1,8 +1,28 @@
 package com.sample.demo;
 
-import java.util.Scanner;
+import java.util.Optional;
 
 public class StringWorker {
+
+    private static volatile StringWorker worker;
+
+    private StringWorker() {
+        if (worker != null) {
+            throw new AssertionError("StringWorker constructor can't be called explicitly");
+        }
+    }
+
+    public static StringWorker getInstance() {
+
+        if(worker == null) {
+            synchronized (StringWorker.class) {
+                if (worker == null) {
+                    worker = new StringWorker();
+                }
+            }
+        }
+        return worker;
+    }
 
     /*
     For a given string that only contains alphabet characters a-z,
@@ -15,7 +35,7 @@ public class StringWorker {
            -> aaad
            -> d
      */
-    public String removeConsecutiveString3(String srcStr) {
+    public String remove(String srcStr) throws IllegalFormatStringException {
         return doRemoveOrReplace(srcStr, new RemovePrinter());
     }
 
@@ -30,12 +50,12 @@ public class StringWorker {
                 -> aaad
                 -> d
      */
-    public String replaceConsecutiveString(String srcStr) {
+    public String replace(String srcStr) throws IllegalFormatStringException {
         return doRemoveOrReplace(srcStr, new ReplacePrinter());
     }
 
     //common function to do remove or replace operation.
-    public String doRemoveOrReplace(String srcStr, Printer printer) {
+    private String doRemoveOrReplace(String srcStr, Printer printer) throws IllegalFormatStringException {
 
         srcStr = preCheck(srcStr);
 
@@ -82,48 +102,12 @@ public class StringWorker {
     }
 
 
-    // fail-fast if the source is illegal
-    private String preCheck(String src) {
+    private String preCheck(String src) throws IllegalFormatStringException {
         //System.out.println("source: " + srcStr);
-        src = (src == null ? "" : src.trim());
+        src = Optional.ofNullable(src).orElse("").trim();
         if ("".equals(src) || !src.matches("[a-z]+")) {
-            throw new IllegalArgumentException("source string can not be blank or empty " +
-                    "and it should only contain alphabet characters a-z");
+            throw new IllegalFormatStringException("The string should only contain alphabet characters a-z");
         }
         return src;
     }
-
-
-//    public static void main(String[] args) {
-//        boolean optionOK = false;
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Press A for remove and B for replace,E to exit:");
-//        StringWorker stringWorker = new StringWorker();
-//        String option = scanner.nextLine();
-//        option = (option == null ? "" : option.trim());
-//
-//        while(!"e".equalsIgnoreCase(option)) {
-//
-//            if ("a".equalsIgnoreCase(option)) {
-//                System.out.print("Input:");
-//                String src = scanner.nextLine();
-//                stringWorker.removeConsecutiveString3(src);
-//                System.out.print("removal done, what's your next operation:");
-//                option = scanner.nextLine();
-//
-//            } else if ("b".equalsIgnoreCase(option)) {
-//                System.out.print("Input:");
-//                String src = scanner.nextLine();
-//                stringWorker.replaceConsecutiveString(src);
-//                System.out.print("replace done, what's your next operation:");
-//                option = scanner.nextLine();
-//
-//            } else {
-//                System.out.print("invalid option, please enter again:");
-//            }
-//        }
-//
-//    }
-
-
 }
